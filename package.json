@@ -1,5 +1,5 @@
 {
-  "version": "0.0.2",
+  "version": "0.0.3",
   "keywords": [],
   "type": "commonjs",
   "exports": {
@@ -19,7 +19,9 @@
       "default": "./dist/server/index.js"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "strapi-plugin build",
     "watch": "strapi-plugin watch",
