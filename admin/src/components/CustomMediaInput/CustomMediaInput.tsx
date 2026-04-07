@@ -833,7 +833,7 @@ export const CustomMediaInput = React.forwardRef<HTMLDivElement, MediaInputProps
                       </div>
                     ) : null}
                     {!disabled && 
-                      <Tooltip label="Editar Imágenes" side='right' align='center'>
+                      <Tooltip label="Edit Images" side='right' align='center'>
                         <button
                           disabled={disabled}
                           onClick={openBrowser}
