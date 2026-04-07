@@ -1,4 +1,7 @@
-# Strapi Enhanced File Browser
+[![Npm](https://badgen.net/badge/icon/npm?icon=npm&label)](https://www.npmjs.com/package/strapi-enhanced-file-browser) 
+[![Npm package version](https://badgen.net/npm/v/strapi-enhanced-file-browser)](https://npmjs.com/package/strapi-enhanced-file-browser)
+
+# Strapi Enhanced File Browser 
 
 Adds better Drag&Drop functionality to the file browser input and a fastest and more friendly UX.
 
