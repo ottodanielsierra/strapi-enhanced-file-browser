@@ -20,7 +20,8 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "assets"
   ],
   "scripts": {
     "build": "strapi-plugin build",
@@ -69,11 +70,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com//ottodanielsierra.git"
+    "url": "https://github.com/ottodanielsierra/strapi-enhanced-file-browser"
   },
   "bugs": {
     "url": "https://github.com//ottodanielsierra/issues"
   },
-  "homepage": "https://github.com//ottodanielsierra#readme",
+  "homepage": "https://github.com//ottodanielsierra",
   "author": "Otto Sierra <otto.daniel.sierra@gmail.com>"
 }

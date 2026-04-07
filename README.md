@@ -6,6 +6,14 @@ The main problem this plugin solves is strapi native file browser being slow on 
 
 This plugin solves the problem using d&dkit library to have a very optimized experience.
 
+## Installation
+
+Add the package to your Strapi application:
+
+```bash
+npm i strapi-enhanced-file-browser
+```
+
 ## Usage
 
 Just install and you're good to go. Next Time you use a media/file input on a new collection/single type it will show.
