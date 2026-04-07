@@ -28,8 +28,7 @@ import {
   Crumb,
   CrumbLink,
   TextButton,
-  Loader,
-  DesignSystemProvider 
+  Loader
 } from '@strapi/design-system';
 import { DndContext, DragOverlay, KeyboardSensor, PointerSensor, closestCenter, useDroppable, useSensor, useSensors, type DragCancelEvent, type DragEndEvent, type DragOverEvent, type DragStartEvent } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
@@ -743,503 +742,501 @@ export const CustomMediaInput = React.forwardRef<HTMLDivElement, MediaInputProps
           onCheckedChange={(checked: boolean) => setPreferNativeDialog(!checked)} />
       </div>
     
-      <DesignSystemProvider>
-        {(preferNativeDialog && NativeMediaInput) ? 
-          <div ref={ref}>
-            <div
-              style={{
-                border: '1px solid #dcdce4',
-                borderRadius: '8px',
-                padding: '14px',
-                background: '#fff',
-                display: 'grid',
-                gap: '12px',
-              }}
-            >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
-                <div>
-                  <div style={{ fontSize: '13px', fontWeight: 600 }}>Legacy Mode</div>
-                  <div style={{ fontSize: '12px', color: '#666687' }}>
-                    This mode uses the original Strapi media library input. The new enhanced browser is available to toggle using the switch above.
-                  </div>
+      {(preferNativeDialog && NativeMediaInput) ? 
+        <div ref={ref}>
+          <div
+            style={{
+              border: '1px solid #dcdce4',
+              borderRadius: '8px',
+              padding: '14px',
+              background: '#fff',
+              display: 'grid',
+              gap: '12px',
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
+              <div>
+                <div style={{ fontSize: '13px', fontWeight: 600 }}>Legacy Mode</div>
+                <div style={{ fontSize: '12px', color: '#666687' }}>
+                  This mode uses the original Strapi media library input. The new enhanced browser is available to toggle using the switch above.
                 </div>
               </div>
-
-              <NativeMediaInput
-                attribute={{ allowedTypes, multiple }}
-                disabled={disabled}
-                hint={hint}
-                label={label}
-                name={name}
-                required={required}
-              />
             </div>
-          </div>
-          :
-          <div ref={ref}>
-            <div style={{ border: '1px solid #dcdce4', borderRadius: '8px', padding: '14px', background: '#fff' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
-                <div>
-                  <div style={{ fontSize: '13px', fontWeight: 600 }}>Selected Assets (<span>{label ?? name}</span><span aria-hidden="true" className="sc-beySbL ceLAnO sc-dmyDGl heFXNT">{required ? '*': ''}</span>)</div>
-                  <div style={{ fontSize: '12px', color: '#666687' }}>
-                    {selectedAssets.length === 0 ? 'No files selected.' : `${selectedAssets.length} files selected.`}
-                  </div>
-                </div>
 
-                {selectedAssets.length == 0 && (
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
-                    <Button type="button" onClick={openBrowser} disabled={disabled} startIcon={<Pencil />}>
-                      Select Files
-                    </Button>
-                  </div>
-                )}
+            <NativeMediaInput
+              attribute={{ allowedTypes, multiple }}
+              disabled={disabled}
+              hint={hint}
+              label={label}
+              name={name}
+              required={required}
+            />
+          </div>
+        </div>
+        :
+        <div ref={ref}>
+          <div style={{ border: '1px solid #dcdce4', borderRadius: '8px', padding: '14px', background: '#fff' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
+              <div>
+                <div style={{ fontSize: '13px', fontWeight: 600 }}>Selected Assets (<span>{label ?? name}</span><span aria-hidden="true" className="sc-beySbL ceLAnO sc-dmyDGl heFXNT">{required ? '*': ''}</span>)</div>
+                <div style={{ fontSize: '12px', color: '#666687' }}>
+                  {selectedAssets.length === 0 ? 'No files selected.' : `${selectedAssets.length} files selected.`}
+                </div>
               </div>
 
-              {selectedAssets.length > 0 ? (
-                <div style={{ marginTop: '12px', display: 'grid', gap: '10px' }}>
-                  <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                    {compactPreviewAssets.map((asset) => (
-                      <div
-                        key={asset.id}
+              {selectedAssets.length == 0 && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+                  <Button type="button" onClick={openBrowser} disabled={disabled} startIcon={<Pencil />}>
+                    Select Files
+                  </Button>
+                </div>
+              )}
+            </div>
+
+            {selectedAssets.length > 0 ? (
+              <div style={{ marginTop: '12px', display: 'grid', gap: '10px' }}>
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                  {compactPreviewAssets.map((asset) => (
+                    <div
+                      key={asset.id}
+                      style={{
+                        width: '78px',
+                        height: '78px',
+                        borderRadius: '8px',
+                        overflow: 'hidden',
+                        border: '1px solid #ececf3',
+                        background: '#f6f6f9',
+                      }}
+                      title={asset.name ?? `File #${asset.id}`}
+                    >
+                      <MediaPreview asset={asset} variant="compact" />
+                    </div>
+                  ))}
+                  {selectedAssets.length > compactPreviewAssets.length ? (
+                    <div
+                      style={{
+                        width: '78px',
+                        height: '78px',
+                        borderRadius: '8px',
+                        border: '1px dashed #c0c0cf',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '12px',
+                        color: '#666687',
+                        background: '#fafafd',
+                      }}
+                    >
+                      +{selectedAssets.length - compactPreviewAssets.length}
+                    </div>
+                  ) : null}
+                  {!disabled && 
+                    <Tooltip label="Edit Images" side='right' align='center'>
+                      <button
+                        disabled={disabled}
+                        onClick={openBrowser}
                         style={{
                           width: '78px',
                           height: '78px',
                           borderRadius: '8px',
-                          overflow: 'hidden',
-                          border: '1px solid #ececf3',
-                          background: '#f6f6f9',
-                        }}
-                        title={asset.name ?? `File #${asset.id}`}
-                      >
-                        <MediaPreview asset={asset} variant="compact" />
-                      </div>
-                    ))}
-                    {selectedAssets.length > compactPreviewAssets.length ? (
-                      <div
-                        style={{
-                          width: '78px',
-                          height: '78px',
-                          borderRadius: '8px',
-                          border: '1px dashed #c0c0cf',
+                          border: '1px dashed #4945ff',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
                           fontSize: '12px',
                           color: '#666687',
                           background: '#fafafd',
+                          cursor: 'pointer'
                         }}
-                      >
-                        +{selectedAssets.length - compactPreviewAssets.length}
-                      </div>
-                    ) : null}
-                    {!disabled && 
-                      <Tooltip label="Edit Images" side='right' align='center'>
-                        <button
-                          disabled={disabled}
-                          onClick={openBrowser}
-                          style={{
-                            width: '78px',
-                            height: '78px',
-                            borderRadius: '8px',
-                            border: '1px dashed #4945ff',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            fontSize: '12px',
-                            color: '#666687',
-                            background: '#fafafd',
-                            cursor: 'pointer'
-                          }}
-                          className='editGalleryButton'>
-                          <Pencil fill='primary600' />
-                        </button>
-                      </Tooltip>
-                    }
-                  </div>
-
+                        className='editGalleryButton'>
+                        <Pencil fill='primary600' />
+                      </button>
+                    </Tooltip>
+                  }
                 </div>
-              ) : null}
-            </div>
 
-            {hint ? <div style={{ marginTop: '6px', color: '#666687', fontSize: '12px' }}>{hint}</div> : null}
-            {error ? <div style={{ marginTop: '6px', color: '#d02b20', fontSize: '12px' }}>{String(error)}</div> : null}
+              </div>
+            ) : null}
+          </div>
 
-            {open ? (
-              <Modal.Root open={open} onOpenChange={setOpen}>
-                
-                <Modal.Content>
-                  {loadingFiles ? <div style={cmlLoaderDivStyle}><Loader>Loading content...</Loader></div> : null}
-                  <Modal.Header>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', gap: '16px', flexWrap: 'wrap' }}>
-                      <div>
-                        <Modal.Title>Enhanced File Browser</Modal.Title>
-                        <div style={{ fontSize: '13px', color: '#666687', marginTop: '4px' }}>
-                          Select files in the browser and order them within the selected files tab.
-                        </div>
+          {hint ? <div style={{ marginTop: '6px', color: '#666687', fontSize: '12px' }}>{hint}</div> : null}
+          {error ? <div style={{ marginTop: '6px', color: '#d02b20', fontSize: '12px' }}>{String(error)}</div> : null}
+
+          {open ? (
+            <Modal.Root open={open} onOpenChange={setOpen}>
+              
+              <Modal.Content>
+                {loadingFiles ? <div style={cmlLoaderDivStyle}><Loader>Loading content...</Loader></div> : null}
+                <Modal.Header>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', gap: '16px', flexWrap: 'wrap' }}>
+                    <div>
+                      <Modal.Title>Enhanced File Browser</Modal.Title>
+                      <div style={{ fontSize: '13px', color: '#666687', marginTop: '4px' }}>
+                        Select files in the browser and order them within the selected files tab.
                       </div>
                     </div>
-                  </Modal.Header>
-                  <Modal.Body style={{ display: 'grid', gridTemplateRows: 'auto 1fr', minHeight: 0, gap: 0 }}>
-                    <Tabs.Root
-                      variant="simple"
-                      value={activeTab}
-                      onValueChange={(value: string) => setActiveTab(value as BrowserTab)}
-                    >
-                      <Tabs.List>
-                        <Tabs.Trigger value="browser">
-                          <Typography  variant="sigma">Browse</Typography >                        
-                        </Tabs.Trigger>
-                        <Tabs.Trigger value="selected">
-                          <Typography  variant="sigma">Selected Files <Badge>{tempSelectedAssets.length}</Badge></Typography>                        
-                        </Tabs.Trigger>
-                      </Tabs.List>
-                      <Divider />
-                      <Tabs.Content value="browser" style={{ minHeight: 0, overflow: 'hidden' }}>
-                        <div
-                          style={{
-                            display: 'grid',
-                            gap: '16px',
-                            minHeight: 0,
-                            padding: '16px',
-                            background: 'linear-gradient(180deg, #fcfcff 0%, #ffffff 100%)',
-                          }}
-                        >
-                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px', flexWrap: 'wrap' }}>
-                            <div style={{ display: 'grid', gap: '4px' }}>
-                              <Typography variant="sigma" textColor="neutral800">
-                                File Explorer
-                              </Typography>
-                              <Typography variant="pi" textColor="neutral600">
-                                Folders appear above the current path to navigate without losing context.
-                              </Typography>
-                            </div>
-
-                            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
-                              <Button
-                                type="button"
-                                variant="secondary"
-                                startIcon={<Folder />}
-                                onClick={() => goToFolder(null)}
-                                disabled={selectedFolderId === null}
-                              >
-                                Root
-                              </Button>
-                            </div>
+                  </div>
+                </Modal.Header>
+                <Modal.Body style={{ display: 'grid', gridTemplateRows: 'auto 1fr', minHeight: 0, gap: 0 }}>
+                  <Tabs.Root
+                    variant="simple"
+                    value={activeTab}
+                    onValueChange={(value: string) => setActiveTab(value as BrowserTab)}
+                  >
+                    <Tabs.List>
+                      <Tabs.Trigger value="browser">
+                        <Typography  variant="sigma">Browse</Typography >                        
+                      </Tabs.Trigger>
+                      <Tabs.Trigger value="selected">
+                        <Typography  variant="sigma">Selected Files <Badge>{tempSelectedAssets.length}</Badge></Typography>                        
+                      </Tabs.Trigger>
+                    </Tabs.List>
+                    <Divider />
+                    <Tabs.Content value="browser" style={{ minHeight: 0, overflow: 'hidden' }}>
+                      <div
+                        style={{
+                          display: 'grid',
+                          gap: '16px',
+                          minHeight: 0,
+                          padding: '16px',
+                          background: 'linear-gradient(180deg, #fcfcff 0%, #ffffff 100%)',
+                        }}
+                      >
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px', flexWrap: 'wrap' }}>
+                          <div style={{ display: 'grid', gap: '4px' }}>
+                            <Typography variant="sigma" textColor="neutral800">
+                              File Explorer
+                            </Typography>
+                            <Typography variant="pi" textColor="neutral600">
+                              Folders appear above the current path to navigate without losing context.
+                            </Typography>
                           </div>
 
-                          <Breadcrumbs label="Ruta actual">
-                            <Crumb>
-                              <CrumbLink
-                                href="#"
-                                onClick={(event: React.MouseEvent<HTMLAnchorElement>) => {
-                                  event.preventDefault();
-                                  goToFolder(null);
-                                }}
-                              >
-                                Root
-                              </CrumbLink>
-                            </Crumb>
-
-                            {folderBreadcrumbs.map(({ folder, isCurrent }) =>
-                              isCurrent ? (
-                                <Crumb key={folder.id} isCurrent>
-                                  {folder.name}
-                                </Crumb>
-                              ) : (
-                                <Crumb key={folder.id}>
-                                  <CrumbLink
-                                    href="#"
-                                    onClick={(event: React.MouseEvent<HTMLAnchorElement>) => {
-                                      event.preventDefault();
-                                      goToFolder(folder.id);
-                                    }}
-                                  >
-                                    {folder.name}
-                                  </CrumbLink>
-                                </Crumb>
-                              )
-                            )}
-                          </Breadcrumbs>
-
-                          <div style={{ display: 'grid', gap: '12px' }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
-                              <div style={{ display: 'grid', gap: '2px' }}>
-                                <Typography variant="sigma" textColor="neutral800">
-                                  Folders
-                                </Typography>
-                              </div>
-                              <Typography variant="pi" textColor="neutral600">
-                                {visibleSubfolders.length} folder(s)
-                              </Typography>
-                            </div>
-
-                            {loadingFolders ? (
-                              <Typography variant="pi" textColor="neutral600">
-                                Loading folders...
-                              </Typography>
-                            ) : visibleSubfolders.length > 0 ? (
-                              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '10px' }}>
-                                {visibleSubfolders.map((folder) => {
-                                  const isCurrentFolder = selectedFolderId === folder.id;
-
-                                  return (
-                                    <Button
-                                      key={folder.id}
-                                      type="button"
-                                      variant={isCurrentFolder ? 'default' : 'secondary'}
-                                      startIcon={<Folder />}
-                                      onClick={() => goToFolder(folder.id)}
-                                      fullWidth
-                                      size="S"
-                                    >
-                                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', minWidth: 0 }}>
-                                        <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                          {folder.name}
-                                        </span>
-                                        {isCurrentFolder ? (
-                                          <Badge>Actual</Badge>
-                                        ) : null}
-                                      </span>
-                                    </Button>
-                                  );
-                                })}
-                              </div>
-                            ) : (
-                              <div
-                                style={{
-                                  border: '1px dashed #c0c0cf',
-                                  borderRadius: '12px',
-                                  padding: '16px',
-                                  color: '#666687',
-                                  background: '#fafafd',
-                                  fontSize: '12px',
-                                }}
-                              >
-                                This folder has no visible subfolders.
-                              </div>
-                            )}
+                          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
+                            <Button
+                              type="button"
+                              variant="secondary"
+                              startIcon={<Folder />}
+                              onClick={() => goToFolder(null)}
+                              disabled={selectedFolderId === null}
+                            >
+                              Root
+                            </Button>
                           </div>
+                        </div>
 
-                          <div style={{ display: 'grid', gap: '12px' }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
-                              <div style={{ display: 'grid', gap: '2px' }}>
-                                <Typography variant="sigma" textColor="neutral800">
-                                  Files
-                                </Typography>
-                              </div>
-                            </div>
-                            
-                            {!loadingFiles && files.length === 0 ? (
-                              <div style={{ color: '#666687' }}>No files in this folder or page.</div>
-                            ) : null}
-                            <div
-                              style={{
-                                display: 'grid',
-                                gridTemplateColumns: 'repeat(auto-fill, minmax(190px, 1fr))',
-                                gap: '12px',
+                        <Breadcrumbs label="Ruta actual">
+                          <Crumb>
+                            <CrumbLink
+                              href="#"
+                              onClick={(event: React.MouseEvent<HTMLAnchorElement>) => {
+                                event.preventDefault();
+                                goToFolder(null);
                               }}
                             >
-                              {files.map((file) => {
-                                const checked = Boolean(tempSelectedMap[file.id]);
+                              Root
+                            </CrumbLink>
+                          </Crumb>
+
+                          {folderBreadcrumbs.map(({ folder, isCurrent }) =>
+                            isCurrent ? (
+                              <Crumb key={folder.id} isCurrent>
+                                {folder.name}
+                              </Crumb>
+                            ) : (
+                              <Crumb key={folder.id}>
+                                <CrumbLink
+                                  href="#"
+                                  onClick={(event: React.MouseEvent<HTMLAnchorElement>) => {
+                                    event.preventDefault();
+                                    goToFolder(folder.id);
+                                  }}
+                                >
+                                  {folder.name}
+                                </CrumbLink>
+                              </Crumb>
+                            )
+                          )}
+                        </Breadcrumbs>
+
+                        <div style={{ display: 'grid', gap: '12px' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
+                            <div style={{ display: 'grid', gap: '2px' }}>
+                              <Typography variant="sigma" textColor="neutral800">
+                                Folders
+                              </Typography>
+                            </div>
+                            <Typography variant="pi" textColor="neutral600">
+                              {visibleSubfolders.length} folder(s)
+                            </Typography>
+                          </div>
+
+                          {loadingFolders ? (
+                            <Typography variant="pi" textColor="neutral600">
+                              Loading folders...
+                            </Typography>
+                          ) : visibleSubfolders.length > 0 ? (
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '10px' }}>
+                              {visibleSubfolders.map((folder) => {
+                                const isCurrentFolder = selectedFolderId === folder.id;
+
                                 return (
-                                  <div
-                                    key={file.id}
-                                    role="button"
-                                    tabIndex={0}
-                                    onClick={() => toggleTempAsset(file)}
-                                    onKeyDown={(event) => {
-                                      if (event.key === 'Enter' || event.key === ' ') {
-                                        event.preventDefault();
-                                        toggleTempAsset(file);
-                                      }
-                                    }}
-                                    style={{
-                                      border: checked ? '2px solid #1d4ed8' : '1px solid #e5e7eb',
-                                      borderRadius: '12px',
-                                      padding: '10px',
-                                      display: 'grid',
-                                      gap: '8px',
-                                      cursor: 'pointer',
-                                      textAlign: 'left',
-                                      background: checked ? '#f8fbff' : '#fff',
-                                    }}
+                                  <Button
+                                    key={folder.id}
+                                    type="button"
+                                    variant={isCurrentFolder ? 'default' : 'secondary'}
+                                    startIcon={<Folder />}
+                                    onClick={() => goToFolder(folder.id)}
+                                    fullWidth
+                                    size="S"
                                   >
-                                    <MediaPreview asset={file} variant="browser" />
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', gap: '8px', alignItems: 'start' }}>
-                                      <div
-                                        style={{
-                                          fontSize: '12px',
-                                          whiteSpace: 'nowrap',
-                                          overflow: 'hidden',
-                                          textOverflow: 'ellipsis',
-                                          minWidth: 0,
-                                          textWrap: 'auto',
-                                          overflowWrap: 'anywhere',
-                                        }}
-                                      >
-                                        {file.name ?? `Archivo #${file.id}`}
-                                      </div>
-                                      <div
-                                        style={{
-                                          fontSize: '11px',
-                                          color: checked ? '#28b64c' : '#666687',
-                                          fontWeight: 700,
-                                          flexShrink: 0,
-                                          display: 'flex',
-                                          alignItems: 'center',
-                                          gap: '4px',
-                                        }}
-                                      >
-                                        {checked ? <CheckCircle /> : null}
-                                      </div>
-                                    </div>
-                                  </div>
+                                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', minWidth: 0 }}>
+                                      <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                        {folder.name}
+                                      </span>
+                                      {isCurrentFolder ? (
+                                        <Badge>Actual</Badge>
+                                      ) : null}
+                                    </span>
+                                  </Button>
                                 );
                               })}
                             </div>
-                            
-                          </div>
+                          ) : (
+                            <div
+                              style={{
+                                border: '1px dashed #c0c0cf',
+                                borderRadius: '12px',
+                                padding: '16px',
+                                color: '#666687',
+                                background: '#fafafd',
+                                fontSize: '12px',
+                              }}
+                            >
+                              This folder has no visible subfolders.
+                            </div>
+                          )}
                         </div>
-                      </Tabs.Content>
-                      <Tabs.Content value="selected">
-                        <DndContext
-                          sensors={sensors}
-                          collisionDetection={closestCenter}
-                          autoScroll
-                          onDragStart={handleDragStart}
-                          onDragOver={handleDragOver}
-                          onDragEnd={handleDragEnd}
-                          onDragCancel={handleDragCancel}
-                        >
+
+                        <div style={{ display: 'grid', gap: '12px' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
+                            <div style={{ display: 'grid', gap: '2px' }}>
+                              <Typography variant="sigma" textColor="neutral800">
+                                Files
+                              </Typography>
+                            </div>
+                          </div>
+                          
+                          {!loadingFiles && files.length === 0 ? (
+                            <div style={{ color: '#666687' }}>No files in this folder or page.</div>
+                          ) : null}
                           <div
                             style={{
-                              padding: '16px',
-                              overflow: 'auto',
-                              background: 'linear-gradient(180deg, #fffdf8 0%, #ffffff 100%)',
-                              flex: 1,
+                              display: 'grid',
+                              gridTemplateColumns: 'repeat(auto-fill, minmax(190px, 1fr))',
+                              gap: '12px',
                             }}
                           >
-                            {tempSelectedAssets.length === 0 ? (
-                              <div style={{ color: '#666687' }}>There are no selected assets in the gallery.</div>
-                            ) : (
-                              <div style={{ display: 'grid', gap: '12px' }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
-                                  <div style={{ fontSize: '13px', color: '#666687' }}>
-                                    Drag any card to reorder the gallery. The order you see here will be the final order.
-                                  </div>
-                                  <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                                    <IconButtonGroup>
-                                      <IconButton onClick={() => setSelectedViewMode('list')} children={<BulletList />} label="List" />
-                                      <IconButton onClick={() => setSelectedViewMode('grid')} children={<GridFour />} label="Grid" />
-                                    </IconButtonGroup>
+                            {files.map((file) => {
+                              const checked = Boolean(tempSelectedMap[file.id]);
+                              return (
+                                <div
+                                  key={file.id}
+                                  role="button"
+                                  tabIndex={0}
+                                  onClick={() => toggleTempAsset(file)}
+                                  onKeyDown={(event) => {
+                                    if (event.key === 'Enter' || event.key === ' ') {
+                                      event.preventDefault();
+                                      toggleTempAsset(file);
+                                    }
+                                  }}
+                                  style={{
+                                    border: checked ? '2px solid #1d4ed8' : '1px solid #e5e7eb',
+                                    borderRadius: '12px',
+                                    padding: '10px',
+                                    display: 'grid',
+                                    gap: '8px',
+                                    cursor: 'pointer',
+                                    textAlign: 'left',
+                                    background: checked ? '#f8fbff' : '#fff',
+                                  }}
+                                >
+                                  <MediaPreview asset={file} variant="browser" />
+                                  <div style={{ display: 'flex', justifyContent: 'space-between', gap: '8px', alignItems: 'start' }}>
+                                    <div
+                                      style={{
+                                        fontSize: '12px',
+                                        whiteSpace: 'nowrap',
+                                        overflow: 'hidden',
+                                        textOverflow: 'ellipsis',
+                                        minWidth: 0,
+                                        textWrap: 'auto',
+                                        overflowWrap: 'anywhere',
+                                      }}
+                                    >
+                                      {file.name ?? `Archivo #${file.id}`}
+                                    </div>
+                                    <div
+                                      style={{
+                                        fontSize: '11px',
+                                        color: checked ? '#28b64c' : '#666687',
+                                        fontWeight: 700,
+                                        flexShrink: 0,
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '4px',
+                                      }}
+                                    >
+                                      {checked ? <CheckCircle /> : null}
+                                    </div>
                                   </div>
                                 </div>
-
-                                <SortableContext
-                                  items={selectedSortableIds}
-                                  strategy={selectedViewMode === 'grid' ? rectSortingStrategy : verticalListSortingStrategy}
-                                >
-                                  <div
-                                    style={
-                                      selectedViewMode === 'grid'
-                                        ? {
-                                            display: 'grid',
-                                            gridTemplateColumns: 'repeat(auto-fill, minmax(190px, 1fr))',
-                                            gap: '12px',
-                                            alignItems: 'start',
-                                          }
-                                        : {
-                                            display: 'grid',
-                                            gap: '10px',
-                                            maxWidth: '100%',
-                                          }
-                                    }
-                                  >
-                                    {tempSelectedAssets.map((asset, index) => (
-                                      <SortableSelectedAssetCard
-                                        key={asset.id}
-                                        asset={asset}
-                                        index={index}
-                                        selectedViewMode={selectedViewMode}
-                                        disabled={!multiple}
-                                        onRemove={removeTempSelected}
-                                      />
-                                    ))}
-
-                                    <SelectedGalleryEndDropZone selectedViewMode={selectedViewMode} />
-                                  </div>
-                                </SortableContext>
-                              </div>
-                            )}
+                              );
+                            })}
                           </div>
-
-                          {activeDragAsset && typeof document !== 'undefined'
-                            ? createPortal(
-                                <DragOverlay adjustScale={false}>
-                                  <SelectedAssetCardContent
-                                    asset={activeDragAsset}
-                                    index={tempSelectedAssets.findIndex((asset) => asset.id === activeDragAsset.id)}
-                                    selectedViewMode={selectedViewMode}
-                                    isDragging
-                                    isOverlay
-                                    onRemove={removeTempSelected}
-                                  />
-                                </DragOverlay>,
-                                document.body
-                              )
-                            : null}
-                        </DndContext>
-                      </Tabs.Content>
-                    </Tabs.Root>
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px', flexWrap: 'wrap', width: '100%' }}>
-                      <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
-                        {activeTab === 'browser' ? (
-                          <>
-                            <TextButton 
-                              startIcon={<ArrowLeft />} 
-                              onClick={() => setPagination((prev) => ({ ...prev, page: Math.max(1, prev.page - 1) }))}
-                              disabled={pagination.page <= 1}>
-                              Previous Page
-                            </TextButton>
-                            <TextButton 
-                              endIcon={<ArrowRight />} 
-                              onClick={() =>
-                                setPagination((prev) => ({
-                                  ...prev,
-                                  page: Math.min(prev.pageCount || prev.page + 1, prev.page + 1),
-                                }))
-                              }
-                              disabled={pagination.page >= pagination.pageCount}>
-                              Next Page
-                            </TextButton>
-                          </>
-                        ) : <span style={{ fontSize: 12, color: '#666687' }}>{`${tempSelectedAssets.length} selected file(s)`}</span>}
+                          
+                        </div>
                       </div>
-                      <div style={{ fontSize: '12px', color: '#666687' }}>
-                        {activeTab === 'browser'
-                          ? `Page ${pagination.page} of ${pagination.pageCount}`
+                    </Tabs.Content>
+                    <Tabs.Content value="selected">
+                      <DndContext
+                        sensors={sensors}
+                        collisionDetection={closestCenter}
+                        autoScroll
+                        onDragStart={handleDragStart}
+                        onDragOver={handleDragOver}
+                        onDragEnd={handleDragEnd}
+                        onDragCancel={handleDragCancel}
+                      >
+                        <div
+                          style={{
+                            padding: '16px',
+                            overflow: 'auto',
+                            background: 'linear-gradient(180deg, #fffdf8 0%, #ffffff 100%)',
+                            flex: 1,
+                          }}
+                        >
+                          {tempSelectedAssets.length === 0 ? (
+                            <div style={{ color: '#666687' }}>There are no selected assets in the gallery.</div>
+                          ) : (
+                            <div style={{ display: 'grid', gap: '12px' }}>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
+                                <div style={{ fontSize: '13px', color: '#666687' }}>
+                                  Drag any card to reorder the gallery. The order you see here will be the final order.
+                                </div>
+                                <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                                  <IconButtonGroup>
+                                    <IconButton onClick={() => setSelectedViewMode('list')} children={<BulletList />} label="List" />
+                                    <IconButton onClick={() => setSelectedViewMode('grid')} children={<GridFour />} label="Grid" />
+                                  </IconButtonGroup>
+                                </div>
+                              </div>
+
+                              <SortableContext
+                                items={selectedSortableIds}
+                                strategy={selectedViewMode === 'grid' ? rectSortingStrategy : verticalListSortingStrategy}
+                              >
+                                <div
+                                  style={
+                                    selectedViewMode === 'grid'
+                                      ? {
+                                          display: 'grid',
+                                          gridTemplateColumns: 'repeat(auto-fill, minmax(190px, 1fr))',
+                                          gap: '12px',
+                                          alignItems: 'start',
+                                        }
+                                      : {
+                                          display: 'grid',
+                                          gap: '10px',
+                                          maxWidth: '100%',
+                                        }
+                                  }
+                                >
+                                  {tempSelectedAssets.map((asset, index) => (
+                                    <SortableSelectedAssetCard
+                                      key={asset.id}
+                                      asset={asset}
+                                      index={index}
+                                      selectedViewMode={selectedViewMode}
+                                      disabled={!multiple}
+                                      onRemove={removeTempSelected}
+                                    />
+                                  ))}
+
+                                  <SelectedGalleryEndDropZone selectedViewMode={selectedViewMode} />
+                                </div>
+                              </SortableContext>
+                            </div>
+                          )}
+                        </div>
+
+                        {activeDragAsset && typeof document !== 'undefined'
+                          ? createPortal(
+                              <DragOverlay adjustScale={false}>
+                                <SelectedAssetCardContent
+                                  asset={activeDragAsset}
+                                  index={tempSelectedAssets.findIndex((asset) => asset.id === activeDragAsset.id)}
+                                  selectedViewMode={selectedViewMode}
+                                  isDragging
+                                  isOverlay
+                                  onRemove={removeTempSelected}
+                                />
+                              </DragOverlay>,
+                              document.body
+                            )
                           : null}
-                      </div>
-                      <div style={{ display: 'flex', gap: '8px' }}>
-                        <Button type="button" onClick={() => setOpen(false)} variant={"danger-light"}>
-                          Cancel
-                        </Button>
-                        <Button type="button" onClick={confirmBrowserSelection} startIcon={<CheckCircle />}>
-                          Confirm
-                        </Button>
-                      </div>
+                      </DndContext>
+                    </Tabs.Content>
+                  </Tabs.Root>
+                </Modal.Body>
+                <Modal.Footer>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px', flexWrap: 'wrap', width: '100%' }}>
+                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
+                      {activeTab === 'browser' ? (
+                        <>
+                          <TextButton 
+                            startIcon={<ArrowLeft />} 
+                            onClick={() => setPagination((prev) => ({ ...prev, page: Math.max(1, prev.page - 1) }))}
+                            disabled={pagination.page <= 1}>
+                            Previous Page
+                          </TextButton>
+                          <TextButton 
+                            endIcon={<ArrowRight />} 
+                            onClick={() =>
+                              setPagination((prev) => ({
+                                ...prev,
+                                page: Math.min(prev.pageCount || prev.page + 1, prev.page + 1),
+                              }))
+                            }
+                            disabled={pagination.page >= pagination.pageCount}>
+                            Next Page
+                          </TextButton>
+                        </>
+                      ) : <span style={{ fontSize: 12, color: '#666687' }}>{`${tempSelectedAssets.length} selected file(s)`}</span>}
                     </div>
-                  </Modal.Footer>
-                </Modal.Content>
-                
-              </Modal.Root>
-            ) : null}
+                    <div style={{ fontSize: '12px', color: '#666687' }}>
+                      {activeTab === 'browser'
+                        ? `Page ${pagination.page} of ${pagination.pageCount}`
+                        : null}
+                    </div>
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                      <Button type="button" onClick={() => setOpen(false)} variant={"danger-light"}>
+                        Cancel
+                      </Button>
+                      <Button type="button" onClick={confirmBrowserSelection} startIcon={<CheckCircle />}>
+                        Confirm
+                      </Button>
+                    </div>
+                  </div>
+                </Modal.Footer>
+              </Modal.Content>
+              
+            </Modal.Root>
+          ) : null}
 
-          </div>
-        }
-      </DesignSystemProvider>
+        </div>
+      }
     </React.Fragment>
   }
 );
