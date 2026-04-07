@@ -12,6 +12,6 @@ Just install and you're good to go. Next Time you use a media/file input on a ne
 
 ## Screenshots
 
-![Strapi Enhanced File Browser](./admin/assets/img/strapi_file_browser_1.png)
+![Strapi Enhanced File Browser](./assets/img/strapi_file_browser_1.png)
 
-![Strapi Enhanced File Browser Drag And Drop](./admin/assets/img/strapi_file_browser_2.png)
+![Strapi Enhanced File Browser Drag And Drop](./assets/img/strapi_file_browser_2.png)
