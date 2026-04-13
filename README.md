@@ -3,11 +3,11 @@
 
 # Strapi Enhanced File Browser 
 
-Adds better Drag&Drop functionality to the file browser input and a fastest and more friendly UX.
+Adds improved drag-and-drop functionality to the file browser input field, providing a faster and more user-friendly UX.
 
-The main problem this plugin solves is strapi native file browser being slow on Drag&Drop creating problems when handling with a lot of files to select, for example when working with an image gallery with several images.
+The main problem this plugin solves is that Strapi’s native file browser is slow when using drag and drop, which causes issues when handling a large number of files — for example, when working with an image gallery containing many images.
 
-This plugin solves the problem using d&dkit library to have a very optimized experience.
+This plugin solves the problem by using the dnd-kit library to provide a highly optimized experience.
 
 ## Installation
 
